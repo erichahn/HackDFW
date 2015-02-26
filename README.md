@@ -8,3 +8,7 @@ Eric Hahn
 Conor Patrick
 Lloyd Ramey
 Jacob Yacovelli
+
+#Project Description Goes Here
+
+#Project Outline Goes Here
