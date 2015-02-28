@@ -49,19 +49,19 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
 
     private byte[] generateAudio(AudioGeneratorParams parameters, int iteration, int minBufferSize) {
         byte[] buffer = new byte[minBufferSize];
-        int startOffset = iteration * minBufferSize;
+        int startOffset = iteration * minBufferSize / 2;
         ShortBuffer buf = ByteBuffer.wrap(buffer).asShortBuffer();
 
-        double maxValue = parameters.getAmplitude() * Short.MAX_VALUE;
+        double maxAmp = Short.MAX_VALUE;
         int frequency = parameters.getFrequency();
 
-        Log.d(LOG_TAG, "Max value: " + maxValue + "; Frequency: " + frequency +
+        Log.d(LOG_TAG, "Max amp: " + maxAmp + "; Frequency: " + frequency +
                 "; Buffer size: " + minBufferSize);
 
         for(int i = 0; i < buffer.length / 2 ; i++) {
             double time = (double) i / parameters.getSampleRate() + startOffset;
-            double sinValue = Math.sin(2 * Math.PI * frequency * time);
-            buf.put((short) (maxValue * sinValue));
+            double sinValue = Math.sin(2 * Math.PI * parameters.getFrequency() * time);
+            buf.put((short) (parameters.getAmplitude() * maxAmp * sinValue));
         }
         return buffer;
     }
