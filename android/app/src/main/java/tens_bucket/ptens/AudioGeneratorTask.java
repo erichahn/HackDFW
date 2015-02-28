@@ -38,8 +38,12 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
         track.play();
 
         for(int i = 0; !isCancelled(); i++) {
-            byte[] buffer = generateAudio(parameters, i, minBufferSize);
-            track.write(buffer, 0, buffer.length);
+            short[] buffer = generateAudio(parameters, i, minBufferSize);
+            int ret = track.write(buffer, 0, buffer.length);
+            Log.d(LOG_TAG, "Return value: " + ret);
+            if(ret < 0) {
+                Log.e(LOG_TAG, "ERROR CODE: " + ret);
+            }
         }
 
         track.release();
@@ -47,21 +51,18 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
         return null;
     }
 
-    private byte[] generateAudio(AudioGeneratorParams parameters, int iteration, int minBufferSize) {
-        byte[] buffer = new byte[minBufferSize];
-        int startOffset = iteration * minBufferSize / 2;
-        ShortBuffer buf = ByteBuffer.wrap(buffer).asShortBuffer();
+    private short[] generateAudio(AudioGeneratorParams parameters, int iteration, int bufferSize) {
+        short[] buffer = new short[bufferSize];
+        int startOffset = iteration * bufferSize;
 
-        double maxAmp = Short.MAX_VALUE;
-        int frequency = parameters.getFrequency();
+        ShortBuffer buf = ShortBuffer.wrap(buffer);
 
-        Log.d(LOG_TAG, "Max amp: " + maxAmp + "; Frequency: " + frequency +
-                "; Buffer size: " + minBufferSize);
+        Log.d(LOG_TAG, "Iteration: " + iteration + "; Buffer size: " + bufferSize);
 
-        for(int i = 0; i < buffer.length / 2 ; i++) {
-            double time = (double) i / parameters.getSampleRate() + startOffset;
+        for(int i = 0; i < buffer.length; i++) {
+            double time = (double) ( i + startOffset ) / parameters.getSampleRate();
             double sinValue = Math.sin(2 * Math.PI * parameters.getFrequency() * time);
-            buf.put((short) (parameters.getAmplitude() * maxAmp * sinValue));
+            buf.put((short) (sinValue * parameters.getAmplitude() * Short.MAX_VALUE));
         }
         return buffer;
     }
