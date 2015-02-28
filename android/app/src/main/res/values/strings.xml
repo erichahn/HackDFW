@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">pTENS</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="freq_str">Frequency (0 - 150Hz)</string>
-    <string name="amp_str">Amplitude (0-100%)</string>
+    <string name="right_freq_str">Right Frequency (0 - 150Hz)</string>
+    <string name="right_amp_str">Right Amplitude (0-100%)</string>
+    <string name="left_freq_str">Left Frequency (0 - 150Hz)</string>
+    <string name="left_amp_str">Left Amplitude (0-100%)</string>
 </resources>

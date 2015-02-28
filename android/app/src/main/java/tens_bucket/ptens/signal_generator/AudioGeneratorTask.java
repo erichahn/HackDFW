@@ -1,4 +1,4 @@
-package tens_bucket.ptens;
+package tens_bucket.ptens.signal_generator;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.google.common.base.Preconditions;
 
-import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 
 public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Void> {
@@ -61,8 +60,8 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
 
         for(int i = 0; i < buffer.length; i++) {
             double time = (double) ( i + startOffset ) / parameters.getSampleRate();
-            double sinValue = Math.sin(2 * Math.PI * parameters.getFrequency() * time);
-            buf.put((short) (sinValue * parameters.getAmplitude() * Short.MAX_VALUE));
+            double sinValue = Math.sin(2 * Math.PI * parameters.getRightFrequency() * time);
+            buf.put((short) (sinValue * parameters.getRightAmplitude() * Short.MAX_VALUE));
         }
         return buffer;
     }

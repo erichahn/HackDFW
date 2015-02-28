@@ -8,7 +8,7 @@
     <SeekBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/freq_bar"
+        android:id="@+id/right_freq_bar"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -20,7 +20,7 @@
     <SeekBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/amp_bar"
+        android:id="@+id/right_amp_bar"
         android:layout_below="@+id/amp_label"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/freq_str"
+        android:text="@string/right_freq_str"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -44,9 +44,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/amp_str"
+        android:text="@string/right_amp_str"
         android:id="@+id/amp_label"
-        android:layout_below="@+id/freq_bar"
+        android:layout_below="@+id/right_freq_bar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -57,12 +57,12 @@
         android:layout_height="wrap_content"
         android:text="Start"
         android:id="@+id/start_button"
-        android:layout_below="@+id/amp_bar"
+        android:onClick="start"
+        android:layout_below="@+id/left_amp_bar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/amp_bar"
-        android:layout_alignEnd="@+id/amp_bar"
-        android:onClick="start" />
+        android:layout_alignRight="@+id/left_amp_bar"
+        android:layout_alignEnd="@+id/left_amp_bar" />
 
     <Button
         android:layout_width="wrap_content"
@@ -76,4 +76,51 @@
         android:layout_alignEnd="@+id/start_button"
         android:enabled="false"
         android:onClick="stop" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/left_freq_str"
+        android:id="@+id/left_freq_label"
+        android:layout_below="@+id/right_amp_bar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/right_amp_bar"
+        android:layout_alignEnd="@+id/right_amp_bar" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/left_freq_bar"
+        android:progress="50"
+        android:layout_below="@+id/left_freq_label"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/left_amp_str"
+        android:id="@+id/left_amp_label"
+        android:layout_below="@+id/left_freq_bar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/left_freq_bar"
+        android:layout_alignEnd="@+id/left_freq_bar" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/left_amp_bar"
+        android:max="149"
+        android:progress="74"
+        android:layout_below="@+id/left_amp_label"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/left_freq_bar"
+        android:layout_alignEnd="@+id/left_freq_bar" />
 </RelativeLayout>

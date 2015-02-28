@@ -5,11 +5,12 @@ import android.media.AudioTrack;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+
+import tens_bucket.ptens.signal_generator.AudioGeneratorParams;
+import tens_bucket.ptens.signal_generator.AudioGeneratorTask;
 
 
 public class SineGenerator extends ActionBarActivity {
@@ -18,16 +19,19 @@ public class SineGenerator extends ActionBarActivity {
     private Button stopButton;
     private Button startButton;
 
-    private SeekBar frequency;
-    private SeekBar amplitude;
+    private SeekBar rightFrequency;
+    private SeekBar rightAmplitude;
+
+    private SeekBar leftFrequency;
+    private SeekBar leftAmplitude;
 
     private AudioGeneratorTask backgroundTask;
     private AudioGeneratorParams parameters;
 
-    private SeekBar.OnSeekBarChangeListener frequencyListener = new SeekBar.OnSeekBarChangeListener() {
+    private SeekBar.OnSeekBarChangeListener leftFrequencyListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            parameters.setFrequency(progress + 1);
+            parameters.setLeftFrequency(progress + 1);
         }
 
         @Override
@@ -41,10 +45,44 @@ public class SineGenerator extends ActionBarActivity {
         }
     };
 
-    private SeekBar.OnSeekBarChangeListener amplitudeListener = new SeekBar.OnSeekBarChangeListener() {
+    private SeekBar.OnSeekBarChangeListener leftAmplitudeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            parameters.setAmplitude((double) progress / 100.0);
+            parameters.setLeftAmplitude((double) progress / 100.0);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
+    private SeekBar.OnSeekBarChangeListener rightFrequencyListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            parameters.setRightFrequency(progress + 1);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
+    private SeekBar.OnSeekBarChangeListener rightAmplitudeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            parameters.setRightAmplitude((double) progress / 100.0);
         }
 
         @Override
@@ -66,11 +104,17 @@ public class SineGenerator extends ActionBarActivity {
         startButton = (Button) findViewById(R.id.start_button);
         stopButton = (Button) findViewById(R.id.stop_button);
 
-        frequency = (SeekBar) findViewById(R.id.freq_bar);
-        amplitude = (SeekBar) findViewById(R.id.amp_bar);
+        rightFrequency = (SeekBar) findViewById(R.id.right_freq_bar);
+        rightAmplitude = (SeekBar) findViewById(R.id.right_amp_bar);
 
-        frequency.setOnSeekBarChangeListener(frequencyListener);
-        amplitude.setOnSeekBarChangeListener(amplitudeListener);
+        rightFrequency.setOnSeekBarChangeListener(rightFrequencyListener);
+        rightAmplitude.setOnSeekBarChangeListener(rightAmplitudeListener);
+
+        leftFrequency = (SeekBar) findViewById(R.id.left_freq_bar);
+        leftAmplitude = (SeekBar) findViewById(R.id.left_amp_bar);
+
+        leftFrequency.setOnSeekBarChangeListener(leftFrequencyListener);
+        leftAmplitude.setOnSeekBarChangeListener(leftAmplitudeListener);
 
         parameters = new AudioGeneratorParams();
 
@@ -79,8 +123,10 @@ public class SineGenerator extends ActionBarActivity {
         Log.d(LOG_TAG, "Sample Rate: " + sampleRate);
 
         parameters.setSampleRate(sampleRate);
-        parameters.setFrequency(frequency.getProgress() + 1);
-        parameters.setAmplitude((double) amplitude.getProgress() / 100.0);
+        parameters.setRightFrequency(rightFrequency.getProgress() + 1);
+        parameters.setRightAmplitude((double) rightAmplitude.getProgress() / 100.0);
+        parameters.setLeftFrequency(leftFrequency.getProgress() + 1);
+        parameters.setLeftAmplitude((double) leftAmplitude.getProgress() / 100.0);
     }
 
     public void stop(View view) {
@@ -98,28 +144,5 @@ public class SineGenerator extends ActionBarActivity {
     private void changeButtonStates(boolean started) {
         stopButton.setEnabled(started);
         startButton.setEnabled(!started);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sine_generator, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
