@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 
@@ -26,6 +27,19 @@ public class SineGenerator extends ActionBarActivity {
 
         frequency = (SeekBar) findViewById(R.id.freq_bar);
         amplitude = (SeekBar) findViewById(R.id.amp_bar);
+    }
+
+    public void stop(View view) {
+        changeButtonStates(false);
+    }
+
+    public void start(View view) {
+        changeButtonStates(true);
+    }
+
+    private void changeButtonStates(boolean started) {
+        stopButton.setEnabled(started);
+        startButton.setEnabled(!started);
     }
 
 
