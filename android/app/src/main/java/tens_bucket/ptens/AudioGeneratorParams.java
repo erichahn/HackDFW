@@ -2,7 +2,7 @@ package tens_bucket.ptens;
 
 public class AudioGeneratorParams {
     private volatile int frequency;
-    private volatile int amplitude;
+    private volatile double amplitude;
 
     private int sampleRate;
 
@@ -14,11 +14,11 @@ public class AudioGeneratorParams {
         this.frequency = frequency;
     }
 
-    public int getAmplitude() {
+    public double getAmplitude() {
         return amplitude;
     }
 
-    public void setAmplitude(int amplitude) {
+    public void setAmplitude(double amplitude) {
         this.amplitude = amplitude;
     }
 
