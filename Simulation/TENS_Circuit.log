@@ -1,0 +1,22 @@
+Circuit: * C:\Users\Jacob\Development\Projects\HackDFW\Simulation\TENS_Circuit.asc
+
+Direct Newton iteration for .op point succeeded.
+
+Date: Sat Feb 28 13:52:00 2015
+Total elapsed time: 0.417 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 59818
+traniter = 59810
+tranpoints = 12433
+accept = 9664
+rejected = 2769
+matrix size = 14
+fillins = 0
+solver = Normal
+Matrix Compiler1: 384 bytes object code size  0.4/0.3/[0.1]
+Matrix Compiler2: 776 bytes object code size  0.3/0.5/[0.2]
+
+
