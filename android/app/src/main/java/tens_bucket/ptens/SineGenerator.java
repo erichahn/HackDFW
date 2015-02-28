@@ -129,6 +129,14 @@ public class SineGenerator extends ActionBarActivity {
         parameters.setLeftAmplitude((double) leftAmplitude.getProgress() / 100.0);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(backgroundTask != null) {
+            backgroundTask.cancel(true);
+        }
+    }
+
     public void stop(View view) {
         changeButtonStates(false);
         backgroundTask.cancel(true);

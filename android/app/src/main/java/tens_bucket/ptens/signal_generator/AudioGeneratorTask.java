@@ -16,7 +16,7 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
     private AudioTrack track;
     private int minBufferSize;
 
-    private static final int channelConfig = AudioFormat.CHANNEL_OUT_MONO;
+    private static final int channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
     private static final int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
 
     @Override
@@ -52,16 +52,19 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
 
     private short[] generateAudio(AudioGeneratorParams parameters, int iteration, int bufferSize) {
         short[] buffer = new short[bufferSize];
-        int startOffset = iteration * bufferSize;
+        int startOffset = iteration * bufferSize / 2;
 
         ShortBuffer buf = ShortBuffer.wrap(buffer);
 
         Log.d(LOG_TAG, "Iteration: " + iteration + "; Buffer size: " + bufferSize);
+        Log.d(LOG_TAG, "PARAMS: " + parameters);
 
-        for(int i = 0; i < buffer.length; i++) {
+        for(int i = 0; i < buffer.length / 2; i++) {
             double time = (double) ( i + startOffset ) / parameters.getSampleRate();
-            double sinValue = Math.sin(2 * Math.PI * parameters.getRightFrequency() * time);
-            buf.put((short) (sinValue * parameters.getRightAmplitude() * Short.MAX_VALUE));
+            double rightSinValue = Math.sin(2 * Math.PI * parameters.getRightFrequency() * time);
+            double leftSinValue = Math.sin(2 * Math.PI * parameters.getLeftFrequency() * time);
+            buf.put((short) (rightSinValue * parameters.getRightAmplitude() * Short.MAX_VALUE));
+            buf.put((short) (leftSinValue * parameters.getLeftAmplitude() * Short.MAX_VALUE));
         }
         return buffer;
     }

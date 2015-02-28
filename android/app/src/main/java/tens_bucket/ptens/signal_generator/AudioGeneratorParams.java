@@ -1,5 +1,8 @@
 package tens_bucket.ptens.signal_generator;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+
 public class AudioGeneratorParams {
     private volatile int leftFrequency;
     private volatile double leftAmplitude;
@@ -47,5 +50,16 @@ public class AudioGeneratorParams {
 
     public void setLeftAmplitude(double leftAmplitude) {
         this.leftAmplitude = leftAmplitude;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("Right freq", rightFrequency)
+                .add("Right amp", rightAmplitude)
+                .add("Left freq", leftFrequency)
+                .add("Left amp", leftAmplitude)
+                .add("Sample rate", sampleRate)
+                .toString();
     }
 }
