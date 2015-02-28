@@ -1,0 +1,12 @@
+* C:\Users\Jacob\Development\Projects\HackDFW\Simulation\TENS_Circuit.asc
+XU1 0 N003 N004 N001 N005 N003 N002 N001 NE555
+V1 N001 0 9V
+R1 N001 N002 1K tol=1 pwr=0.1
+R2 N002 N003 1K tol=1 pwr=0.1
+C1 0 N003 0.1µ V=50 Irms=0 Rser=0 Lser=0 mfg="TDK" pn="FK28X7R1H104K" type="Ceramic"
+C2 N005 0 0.1µ V=50 Irms=0 Rser=0 Lser=0 mfg="TDK" pn="FK28X7R1H104K" type="Ceramic"
+C3 N001 0 100µ V=50
+.tran 0 0.02s 0s 0.001s
+.lib NE555.sub
+.backanno
+.end
