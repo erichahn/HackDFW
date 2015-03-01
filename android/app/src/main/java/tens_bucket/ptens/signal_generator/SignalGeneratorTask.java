@@ -4,21 +4,28 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.AsyncTask;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import com.google.common.base.Preconditions;
+import com.jjoe64.graphview.series.DataPoint;
 
 import java.nio.ShortBuffer;
+
+import android.os.Handler;
 
 public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParameter, Void, Void> {
 
     private static final String LOG_TAG = SignalGeneratorTask.class.getSimpleName();
     private AudioTrack track;
     private int minBufferSize;
+    private DataPoint lastDataPoint;
 
     private static final int channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
     private static final int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
     private static final int MAX_SIGNAL_VALUE = Short.MAX_VALUE;
+
 
     @Override
     protected Void doInBackground(SignalGeneratorParameter... params) {
@@ -58,33 +65,13 @@ public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParameter, Voi
 
         for(int i = 0; i < buffer.length / 2; i++) {
             double time = (double) ( i + startOffset ) / parameters.getSampleRate();
-            double rightValue = getTensValue(parameters.rightWave, time);
-            double leftValue = getTensValue(parameters.leftWave, time);
+            double rightValue = parameters.rightWave.getTensValue(time);
+            double leftValue = parameters.leftWave.getTensValue(time);
             buf.put((short) (rightValue * MAX_SIGNAL_VALUE));
             buf.put((short) (leftValue * MAX_SIGNAL_VALUE));
         }
         return buffer;
     }
+    private boolean sent  = false;
 
-    private double getTensValue(SignalParameter signalParameter, double time) {
-        double period = 1.0/((double) signalParameter.getFrequency());
-        double step = (time) % period;
-        return tens(signalParameter, 100.0*step/period);
-    }
-
-    private double tens(SignalParameter signalParameter, double percentOfPeriodComplete) {
-        double Vh = signalParameter.getAmplitude();
-        double Vl = -Vh/3;
-
-        if (percentOfPeriodComplete < signalParameter.getDutyCycle()){
-            return 0.25 * Vh / Math.pow(10, percentOfPeriodComplete) + 0.75 * Vh;
-        }
-        else if (percentOfPeriodComplete < 2* signalParameter.getDutyCycle()){
-            return Vl;
-        }
-        else {
-            return Vl / Math.pow(4, percentOfPeriodComplete-2* signalParameter.getDutyCycle());
-        }
-
-    }
 }
