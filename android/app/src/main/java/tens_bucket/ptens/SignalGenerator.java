@@ -9,14 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 
-import tens_bucket.ptens.signal_generator.AudioGeneratorParams;
-import tens_bucket.ptens.signal_generator.AudioGeneratorTask;
+import tens_bucket.ptens.signal_generator.SignalGeneratorParams;
+import tens_bucket.ptens.signal_generator.SignalGeneratorTask;
 import tens_bucket.ptens.signal_generator.WaveParams;
 
 
-public class SineGenerator extends ActionBarActivity {
+public class SignalGenerator extends ActionBarActivity {
 
-    private static final String LOG_TAG = SineGenerator.class.getSimpleName();
+    private static final String LOG_TAG = SignalGenerator.class.getSimpleName();
     private Button stopButton;
     private Button startButton;
 
@@ -28,8 +28,8 @@ public class SineGenerator extends ActionBarActivity {
     private SeekBar leftAmplitude;
     private SeekBar leftDutyCycle;
 
-    private AudioGeneratorTask backgroundTask;
-    private AudioGeneratorParams parameters;
+    private SignalGeneratorTask backgroundTask;
+    private SignalGeneratorParams parameters;
 
     private SeekBar.OnSeekBarChangeListener changeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
@@ -84,7 +84,7 @@ public class SineGenerator extends ActionBarActivity {
         leftAmplitude.setOnSeekBarChangeListener(changeListener);
         leftDutyCycle.setOnSeekBarChangeListener(changeListener);
 
-        parameters = new AudioGeneratorParams();
+        parameters = new SignalGeneratorParams();
 
         int sampleRate = AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC);
         
@@ -117,7 +117,7 @@ public class SineGenerator extends ActionBarActivity {
 
     public void start(View view) {
         changeButtonStates(true);
-        backgroundTask = new AudioGeneratorTask();
+        backgroundTask = new SignalGeneratorTask();
         backgroundTask.execute(parameters);
 
     }

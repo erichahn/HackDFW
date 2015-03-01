@@ -10,9 +10,9 @@ import com.google.common.base.Preconditions;
 
 import java.nio.ShortBuffer;
 
-public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Void> {
+public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParams, Void, Void> {
 
-    private static final String LOG_TAG = AudioGeneratorTask.class.getSimpleName();
+    private static final String LOG_TAG = SignalGeneratorTask.class.getSimpleName();
     private AudioTrack track;
     private int minBufferSize;
 
@@ -21,11 +21,11 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
     private static final int MAX_SIGNAL_VALUE = Short.MAX_VALUE;
 
     @Override
-    protected Void doInBackground(AudioGeneratorParams... params) {
+    protected Void doInBackground(SignalGeneratorParams... params) {
         Preconditions.checkNotNull(params);
         Preconditions.checkArgument(params.length == 1, "AudioGeneratorTask can only handle " +
                 "a single parameter");
-        AudioGeneratorParams parameters = params[0];
+        SignalGeneratorParams parameters = params[0];
 
         minBufferSize = AudioTrack.getMinBufferSize(parameters.getSampleRate(),
                 channelConfig, audioFormat);
@@ -50,7 +50,7 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
         return null;
     }
 
-    private short[] generateAudio(AudioGeneratorParams parameters, int iteration, int bufferSize) {
+    private short[] generateAudio(SignalGeneratorParams parameters, int iteration, int bufferSize) {
         short[] buffer = new short[bufferSize];
         int startOffset = iteration * bufferSize / 2;
 
