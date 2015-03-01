@@ -121,7 +121,7 @@ public class SignalGenerator extends ActionBarActivity {
     }
 
     private boolean switchToBasic() {
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, TherapyMenu.class);
         startActivity(intent);
         return true;
     }
@@ -129,7 +129,7 @@ public class SignalGenerator extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_options, menu);
+        inflater.inflate(R.menu.avd_options, menu);
         return true;
     }
 }
