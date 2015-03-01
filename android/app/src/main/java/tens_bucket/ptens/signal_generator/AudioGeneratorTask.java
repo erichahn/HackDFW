@@ -83,7 +83,7 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
             return Vl;
         }
         else {
-            return Vl / Math.pow(2, percentOfPeriodComplete-2* waveParams.getDutyCycle());
+            return Vl / Math.pow(4, percentOfPeriodComplete-2* waveParams.getDutyCycle());
         }
 
     }

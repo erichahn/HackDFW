@@ -11,6 +11,7 @@ import android.widget.SeekBar;
 
 import tens_bucket.ptens.signal_generator.AudioGeneratorParams;
 import tens_bucket.ptens.signal_generator.AudioGeneratorTask;
+import tens_bucket.ptens.signal_generator.WaveParams;
 
 
 public class SineGenerator extends ActionBarActivity {
@@ -21,9 +22,11 @@ public class SineGenerator extends ActionBarActivity {
 
     private SeekBar rightFrequency;
     private SeekBar rightAmplitude;
+    private SeekBar rightDutyCycle;
 
     private SeekBar leftFrequency;
     private SeekBar leftAmplitude;
+    private SeekBar leftDutyCycle;
 
     private AudioGeneratorTask backgroundTask;
     private AudioGeneratorParams parameters;
@@ -35,10 +38,14 @@ public class SineGenerator extends ActionBarActivity {
                 parameters.rightWave.setFrequency(progress + 1);
             } else if(seekBar == rightAmplitude) {
                 parameters.rightWave.setAmplitude(progress / 100.0);
+            } else if(seekBar == rightDutyCycle) {
+                parameters.rightWave.setDutyCycle(progress / 10.0 + 3.5);
             } else if(seekBar == leftFrequency) {
                 parameters.leftWave.setFrequency(progress + 1);
             } else if(seekBar == leftAmplitude) {
                 parameters.leftWave.setAmplitude(progress / 100.0);
+            } else if(seekBar == leftDutyCycle) {
+                parameters.leftWave.setDutyCycle(progress / 10.0 + 3.5);
             }
         }
 
@@ -63,15 +70,19 @@ public class SineGenerator extends ActionBarActivity {
 
         rightFrequency = (SeekBar) findViewById(R.id.right_freq_bar);
         rightAmplitude = (SeekBar) findViewById(R.id.right_amp_bar);
+        rightDutyCycle = (SeekBar) findViewById(R.id.right_duty_bar);
 
         rightFrequency.setOnSeekBarChangeListener(changeListener);
         rightAmplitude.setOnSeekBarChangeListener(changeListener);
+        rightDutyCycle.setOnSeekBarChangeListener(changeListener);
 
         leftFrequency = (SeekBar) findViewById(R.id.left_freq_bar);
         leftAmplitude = (SeekBar) findViewById(R.id.left_amp_bar);
+        leftDutyCycle = (SeekBar) findViewById(R.id.left_duty_bar);
 
         leftFrequency.setOnSeekBarChangeListener(changeListener);
         leftAmplitude.setOnSeekBarChangeListener(changeListener);
+        leftDutyCycle.setOnSeekBarChangeListener(changeListener);
 
         parameters = new AudioGeneratorParams();
 
@@ -80,12 +91,15 @@ public class SineGenerator extends ActionBarActivity {
         Log.d(LOG_TAG, "Sample Rate: " + sampleRate);
 
         parameters.setSampleRate(sampleRate);
-        parameters.setRightFrequency(rightFrequency.getProgress() + 1);
-        parameters.setRightAmplitude((double) rightAmplitude.getProgress() / 100.0);
-        parameters.setLeftFrequency(leftFrequency.getProgress() + 1);
-        parameters.setLeftAmplitude((double) leftAmplitude.getProgress() / 100.0);
-        parameters.setRightDutyCycle(4.5);
-        parameters.setLeftDutyCycle(4.5);
+
+        setupDefaultWaveParameters(parameters.leftWave);
+        setupDefaultWaveParameters(parameters.rightWave);
+    }
+
+    private void setupDefaultWaveParameters(WaveParams wave) {
+        wave.setAmplitude(leftAmplitude.getProgress() / 100.0);
+        wave.setFrequency(leftFrequency.getProgress() + 1);
+        wave.setDutyCycle(leftDutyCycle.getProgress() / 10.0 + 3.5);
     }
 
     @Override
