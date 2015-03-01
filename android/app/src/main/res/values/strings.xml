@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">pTENS</string>
+    <string name="app_name">TENS Control</string>
 
     <string name="stop_str">Stop</string>
     <string name="start_str">Start</string>
