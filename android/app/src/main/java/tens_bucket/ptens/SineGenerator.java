@@ -28,61 +28,18 @@ public class SineGenerator extends ActionBarActivity {
     private AudioGeneratorTask backgroundTask;
     private AudioGeneratorParams parameters;
 
-    private SeekBar.OnSeekBarChangeListener leftFrequencyListener = new SeekBar.OnSeekBarChangeListener() {
+    private SeekBar.OnSeekBarChangeListener changeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            parameters.setLeftFrequency(progress + 1);
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
-        }
-    };
-
-    private SeekBar.OnSeekBarChangeListener leftAmplitudeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            parameters.setLeftAmplitude((double) progress / 100.0);
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
-        }
-    };
-
-    private SeekBar.OnSeekBarChangeListener rightFrequencyListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            parameters.setRightFrequency(progress + 1);
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-
-        }
-    };
-
-    private SeekBar.OnSeekBarChangeListener rightAmplitudeListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            parameters.setRightAmplitude((double) progress / 100.0);
+            if(seekBar == rightFrequency) {
+                parameters.rightWave.setFrequency(progress + 1);
+            } else if(seekBar == rightAmplitude) {
+                parameters.rightWave.setAmplitude(progress / 100.0);
+            } else if(seekBar == leftFrequency) {
+                parameters.leftWave.setFrequency(progress + 1);
+            } else if(seekBar == leftAmplitude) {
+                parameters.leftWave.setAmplitude(progress / 100.0);
+            }
         }
 
         @Override
@@ -107,14 +64,14 @@ public class SineGenerator extends ActionBarActivity {
         rightFrequency = (SeekBar) findViewById(R.id.right_freq_bar);
         rightAmplitude = (SeekBar) findViewById(R.id.right_amp_bar);
 
-        rightFrequency.setOnSeekBarChangeListener(rightFrequencyListener);
-        rightAmplitude.setOnSeekBarChangeListener(rightAmplitudeListener);
+        rightFrequency.setOnSeekBarChangeListener(changeListener);
+        rightAmplitude.setOnSeekBarChangeListener(changeListener);
 
         leftFrequency = (SeekBar) findViewById(R.id.left_freq_bar);
         leftAmplitude = (SeekBar) findViewById(R.id.left_amp_bar);
 
-        leftFrequency.setOnSeekBarChangeListener(leftFrequencyListener);
-        leftAmplitude.setOnSeekBarChangeListener(leftAmplitudeListener);
+        leftFrequency.setOnSeekBarChangeListener(changeListener);
+        leftAmplitude.setOnSeekBarChangeListener(changeListener);
 
         parameters = new AudioGeneratorParams();
 

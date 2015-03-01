@@ -18,6 +18,7 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
 
     private static final int channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
     private static final int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
+    private static final int MAX_SIGNAL_VALUE = Short.MAX_VALUE;
 
     @Override
     protected Void doInBackground(AudioGeneratorParams... params) {
@@ -39,7 +40,6 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
         for(int i = 0; !isCancelled(); i++) {
             short[] buffer = generateAudio(parameters, i, minBufferSize);
             int ret = track.write(buffer, 0, buffer.length);
-            Log.d(LOG_TAG, "Return value: " + ret);
             if(ret < 0) {
                 Log.e(LOG_TAG, "ERROR CODE: " + ret);
             }
@@ -56,41 +56,34 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
 
         ShortBuffer buf = ShortBuffer.wrap(buffer);
 
-        Log.d(LOG_TAG, "Iteration: " + iteration + "; Buffer size: " + bufferSize);
-        Log.d(LOG_TAG, "PARAMS: " + parameters);
-
         for(int i = 0; i < buffer.length / 2; i++) {
             double time = (double) ( i + startOffset ) / parameters.getSampleRate();
-            double rightValue = getTensValue(time, parameters.getRightFrequency(),
-                    parameters.getRightDutyCycle());
-            double leftValue = getTensValue(time, parameters.getLeftFrequency(),
-                    parameters.getLeftDutyCycle());
-            buf.put((short) (rightValue * parameters.getRightAmplitude() * Short.MAX_VALUE));
-            buf.put((short) (leftValue * parameters.getLeftAmplitude() * Short.MAX_VALUE));
+            double rightValue = getTensValue(parameters.rightWave, time);
+            double leftValue = getTensValue(parameters.leftWave, time);
+            buf.put((short) (rightValue * MAX_SIGNAL_VALUE));
+            buf.put((short) (leftValue * MAX_SIGNAL_VALUE));
         }
         return buffer;
     }
 
-    private double getTensValue(double time, int frequency, double dutyCycle) {
-        double period = 1.0/((double)frequency);
+    private double getTensValue(WaveParams waveParams, double time) {
+        double period = 1.0/((double) waveParams.getFrequency());
         double step = (time) % period;
-        double val =  tens(100.0*step/period, dutyCycle);
-        return val;
+        return tens(waveParams, 100.0*step/period);
     }
 
-    private double tens(double x, double dutyCycle) {
-        double Vh = 1.0;
-        double Vl = Vh/3;
+    private double tens(WaveParams waveParams, double percentOfPeriodComplete) {
+        double Vh = waveParams.getAmplitude();
+        double Vl = -Vh/3;
 
-
-        if (x < dutyCycle){
-            return 0.25 * Vh / Math.pow(10, x) + 0.75 * Vh;
+        if (percentOfPeriodComplete < waveParams.getDutyCycle()){
+            return 0.25 * Vh / Math.pow(10, percentOfPeriodComplete) + 0.75 * Vh;
         }
-        else if (x < 2* dutyCycle){
-            return -Vl;
+        else if (percentOfPeriodComplete < 2* waveParams.getDutyCycle()){
+            return Vl;
         }
         else {
-            return -Vl / Math.pow(2, x-2* dutyCycle);
+            return Vl / Math.pow(2, percentOfPeriodComplete-2* waveParams.getDutyCycle());
         }
 
     }
