@@ -8,4 +8,14 @@
     <string name="duty_cycle_str">Duty Cycle</string>
     <string name="pad_one_str">Pad 1</string>
     <string name="pad_two_str">Pad 2</string>
+    <string name="title_activity_main">MainActivity</string>
+
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
