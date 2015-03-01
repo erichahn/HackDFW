@@ -1,10 +1,12 @@
 package tens_bucket.ptens;
 
+import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +19,7 @@ import tens_bucket.ptens.signal_generator.SignalGeneratorParameters;
 import tens_bucket.ptens.signal_generator.SignalGeneratorTask;
 
 
-public class SignalGenerator extends FragmentActivity {
+public class SignalGenerator extends ActionBarActivity {
 
     private static final String LOG_TAG = SignalGenerator.class.getSimpleName();
 
