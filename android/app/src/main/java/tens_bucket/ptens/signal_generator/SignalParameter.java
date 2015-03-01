@@ -1,15 +1,15 @@
 package tens_bucket.ptens.signal_generator;
 
-public class WaveParams {
+public class SignalParameter {
     private volatile int frequency;
     private volatile double dutyCycle;
     private volatile double amplitude;
 
-    public WaveParams() {
+    public SignalParameter() {
         this(1, 4.5, 1.0);
     }
 
-    public WaveParams(int frequency, double dutyCycle, double amplitude) {
+    public SignalParameter(int frequency, double dutyCycle, double amplitude) {
         this.frequency = frequency;
         this.dutyCycle = dutyCycle;
         this.amplitude = amplitude;

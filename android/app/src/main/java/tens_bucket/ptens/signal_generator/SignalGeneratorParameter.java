@@ -1,11 +1,8 @@
 package tens_bucket.ptens.signal_generator;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
-
-public class SignalGeneratorParams {
-    public final WaveParams rightWave = new WaveParams();
-    public final WaveParams leftWave = new WaveParams();
+public class SignalGeneratorParameter {
+    public final SignalParameter rightWave = new SignalParameter();
+    public final SignalParameter leftWave = new SignalParameter();
 
     private int sampleRate;
 

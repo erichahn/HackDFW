@@ -1,22 +1,16 @@
 package tens_bucket.ptens;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SeekBar;
 
 import tens_bucket.ptens.fragments.PadFragment;
-import tens_bucket.ptens.signal_generator.SignalGeneratorParams;
+import tens_bucket.ptens.signal_generator.SignalGeneratorParameter;
 import tens_bucket.ptens.signal_generator.SignalGeneratorTask;
-import tens_bucket.ptens.signal_generator.WaveParams;
 
 
 public class SignalGenerator extends FragmentActivity {
@@ -26,7 +20,7 @@ public class SignalGenerator extends FragmentActivity {
     private Button startButton;
 
     private SignalGeneratorTask backgroundTask;
-    private SignalGeneratorParams parameters;
+    private SignalGeneratorParameter parameters;
 
 
     @Override
@@ -38,7 +32,7 @@ public class SignalGenerator extends FragmentActivity {
         stopButton = (Button) findViewById(R.id.stop_button);
 
 
-        parameters = new SignalGeneratorParams();
+        parameters = new SignalGeneratorParameter();
         PadFragment pad1 =(PadFragment)(getFragmentManager().findFragmentById(R.id.pad_1));
         pad1.setWaveParameters(parameters.leftWave);
 

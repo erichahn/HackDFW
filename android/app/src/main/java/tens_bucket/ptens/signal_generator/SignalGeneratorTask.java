@@ -10,7 +10,7 @@ import com.google.common.base.Preconditions;
 
 import java.nio.ShortBuffer;
 
-public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParams, Void, Void> {
+public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParameter, Void, Void> {
 
     private static final String LOG_TAG = SignalGeneratorTask.class.getSimpleName();
     private AudioTrack track;
@@ -21,11 +21,11 @@ public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParams, Void, 
     private static final int MAX_SIGNAL_VALUE = Short.MAX_VALUE;
 
     @Override
-    protected Void doInBackground(SignalGeneratorParams... params) {
+    protected Void doInBackground(SignalGeneratorParameter... params) {
         Preconditions.checkNotNull(params);
         Preconditions.checkArgument(params.length == 1, "AudioGeneratorTask can only handle " +
                 "a single parameter");
-        SignalGeneratorParams parameters = params[0];
+        SignalGeneratorParameter parameters = params[0];
 
         minBufferSize = AudioTrack.getMinBufferSize(parameters.getSampleRate(),
                 channelConfig, audioFormat);
@@ -50,7 +50,7 @@ public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParams, Void, 
         return null;
     }
 
-    private short[] generateAudio(SignalGeneratorParams parameters, int iteration, int bufferSize) {
+    private short[] generateAudio(SignalGeneratorParameter parameters, int iteration, int bufferSize) {
         short[] buffer = new short[bufferSize];
         int startOffset = iteration * bufferSize / 2;
 
@@ -66,24 +66,24 @@ public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParams, Void, 
         return buffer;
     }
 
-    private double getTensValue(WaveParams waveParams, double time) {
-        double period = 1.0/((double) waveParams.getFrequency());
+    private double getTensValue(SignalParameter signalParameter, double time) {
+        double period = 1.0/((double) signalParameter.getFrequency());
         double step = (time) % period;
-        return tens(waveParams, 100.0*step/period);
+        return tens(signalParameter, 100.0*step/period);
     }
 
-    private double tens(WaveParams waveParams, double percentOfPeriodComplete) {
-        double Vh = waveParams.getAmplitude();
+    private double tens(SignalParameter signalParameter, double percentOfPeriodComplete) {
+        double Vh = signalParameter.getAmplitude();
         double Vl = -Vh/3;
 
-        if (percentOfPeriodComplete < waveParams.getDutyCycle()){
+        if (percentOfPeriodComplete < signalParameter.getDutyCycle()){
             return 0.25 * Vh / Math.pow(10, percentOfPeriodComplete) + 0.75 * Vh;
         }
-        else if (percentOfPeriodComplete < 2* waveParams.getDutyCycle()){
+        else if (percentOfPeriodComplete < 2* signalParameter.getDutyCycle()){
             return Vl;
         }
         else {
-            return Vl / Math.pow(4, percentOfPeriodComplete-2* waveParams.getDutyCycle());
+            return Vl / Math.pow(4, percentOfPeriodComplete-2* signalParameter.getDutyCycle());
         }
 
     }

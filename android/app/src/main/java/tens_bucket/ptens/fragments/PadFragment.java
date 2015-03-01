@@ -8,25 +8,25 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import tens_bucket.ptens.R;
-import tens_bucket.ptens.signal_generator.WaveParams;
+import tens_bucket.ptens.signal_generator.SignalParameter;
 
 public class PadFragment extends Fragment {
 
     private SeekBar frequency;
     private SeekBar amplitude;
     private SeekBar dutyCycle;
-    public  WaveParams wave;
+    public SignalParameter signal;
 
     private SeekBar.OnSeekBarChangeListener changeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (wave != null) {
+            if (signal != null) {
                 if (seekBar == frequency) {
-                    wave.setFrequency(progress + 1);
+                    signal.setFrequency(progress + 1);
                 } else if (seekBar == amplitude) {
-                    wave.setAmplitude(progress / 100.0);
+                    signal.setAmplitude(progress / 100.0);
                 } else if (seekBar == dutyCycle) {
-                    wave.setDutyCycle(progress / 10.0 + 3.5);
+                    signal.setDutyCycle(progress / 10.0 + 3.5);
                 }
             }
         }
@@ -60,13 +60,13 @@ public class PadFragment extends Fragment {
         return r;
     }
 
-    public void setWaveParameters(WaveParams param){
-        this.wave = param;
+    public void setWaveParameters(SignalParameter param){
+        this.signal = param;
         setupDefaultWaveParameters();
     }
     private void setupDefaultWaveParameters() {
-        wave.setAmplitude(amplitude.getProgress() / 100.0);
-        wave.setFrequency(frequency.getProgress() + 1);
-        wave.setDutyCycle(dutyCycle.getProgress() / 10.0 + 3.5);
+        signal.setAmplitude(amplitude.getProgress() / 100.0);
+        signal.setFrequency(frequency.getProgress() + 1);
+        signal.setDutyCycle(dutyCycle.getProgress() / 10.0 + 3.5);
     }
 }
