@@ -6,9 +6,11 @@ import com.google.common.base.Objects;
 public class AudioGeneratorParams {
     private volatile int leftFrequency;
     private volatile double leftAmplitude;
+    private volatile double leftDutyCycle;
 
     private volatile int rightFrequency;
     private volatile double rightAmplitude;
+    private volatile double rightDutyCycle;
 
     private int sampleRate;
 
@@ -50,6 +52,22 @@ public class AudioGeneratorParams {
 
     public void setLeftAmplitude(double leftAmplitude) {
         this.leftAmplitude = leftAmplitude;
+    }
+
+    public double getLeftDutyCycle() {
+        return leftDutyCycle;
+    }
+
+    public void setLeftDutyCycle(double leftDutyCycle) {
+        this.leftDutyCycle = leftDutyCycle;
+    }
+
+    public double getRightDutyCycle() {
+        return rightDutyCycle;
+    }
+
+    public void setRightDutyCycle(double rightDutyCycle) {
+        this.rightDutyCycle = rightDutyCycle;
     }
 
     @Override

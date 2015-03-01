@@ -127,6 +127,8 @@ public class SineGenerator extends ActionBarActivity {
         parameters.setRightAmplitude((double) rightAmplitude.getProgress() / 100.0);
         parameters.setLeftFrequency(leftFrequency.getProgress() + 1);
         parameters.setLeftAmplitude((double) leftAmplitude.getProgress() / 100.0);
+        parameters.setRightDutyCycle(4.5);
+        parameters.setLeftDutyCycle(4.5);
     }
 
     @Override

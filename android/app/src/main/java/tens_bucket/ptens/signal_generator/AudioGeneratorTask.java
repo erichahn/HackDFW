@@ -61,23 +61,24 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
 
         for(int i = 0; i < buffer.length / 2; i++) {
             double time = (double) ( i + startOffset ) / parameters.getSampleRate();
-            double rightValue = getTensValue(time, parameters.getRightFrequency());
-            double leftValue = getTensValue(time, parameters.getLeftFrequency());
+            double rightValue = getTensValue(time, parameters.getRightFrequency(),
+                    parameters.getRightDutyCycle());
+            double leftValue = getTensValue(time, parameters.getLeftFrequency(),
+                    parameters.getLeftDutyCycle());
             buf.put((short) (rightValue * parameters.getRightAmplitude() * Short.MAX_VALUE));
             buf.put((short) (leftValue * parameters.getLeftAmplitude() * Short.MAX_VALUE));
         }
         return buffer;
     }
 
-    private double getTensValue(double time, int frequency) {
+    private double getTensValue(double time, int frequency, double dutyCycle) {
         double period = 1.0/((double)frequency);
         double step = (time) % period;
-        double val =  tens(100.0*step/period);
+        double val =  tens(100.0*step/period, dutyCycle);
         return val;
     }
 
-    private double tens(double x) {
-        double dutyCycle = 4.5;
+    private double tens(double x, double dutyCycle) {
         double Vh = 1.0;
         double Vl = Vh/3;
 
@@ -85,11 +86,11 @@ public class AudioGeneratorTask extends AsyncTask<AudioGeneratorParams, Void, Vo
         if (x < dutyCycle){
             return 0.25 * Vh / Math.pow(10, x) + 0.75 * Vh;
         }
-        else if (x < 2*dutyCycle){
+        else if (x < 2* dutyCycle){
             return -Vl;
         }
         else {
-            return -Vl / Math.pow(2, x-2*dutyCycle);
+            return -Vl / Math.pow(2, x-2* dutyCycle);
         }
 
     }
