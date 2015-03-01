@@ -22,13 +22,12 @@ public class PadFragment extends Fragment {
     private GraphView graph;
 
     private SignalParameters signal;
-    private LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
 
 
     private SeekBar.OnSeekBarChangeListener changeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (signal != null) {
+            if (signal != null && fromUser) {
                 if (seekBar == frequency) {
                     signal.setFrequency(progress + 1);
                 } else if (seekBar == amplitude) {
@@ -70,28 +69,33 @@ public class PadFragment extends Fragment {
 
         setupGraph();
 
-
-
         return r;
     }
 
     public void setWaveParameters(SignalParameters param){
         this.signal = param;
-        setupDefaultWaveParameters();
+        updateParamsFromBars();
         setPlotSignal(signal);
     }
-    private void setupDefaultWaveParameters() {
+
+    public void updateParamsFromBars() {
         signal.setAmplitude(amplitude.getProgress() / 100.0);
         signal.setFrequency(frequency.getProgress() + 1);
         signal.setDutyCycle(dutyCycle.getProgress() / 10.0 + 3.5);
     }
 
-    private void setupGraph(){
-        graph.removeAllSeries();
-        graph.addSeries(series);
+    public void updateBarsFromParams() {
+        amplitude.setProgress((int) (signal.getAmplitude() * 100));
+        frequency.setProgress(signal.getFrequency() - 1);
+        dutyCycle.setProgress((int)((signal.getDutyCycle() - 3.5) * 10));
     }
 
-    public void setPlotSignal(SignalParameters signalParameters){
+    private void setupGraph(){
+        graph.removeAllSeries();
+        graph.addSeries(new LineGraphSeries<DataPoint>());
+    }
+
+    private void setPlotSignal(SignalParameters signalParameters){
         graph.removeAllSeries();
         LineGraphSeries<DataPoint> points = new LineGraphSeries<DataPoint>();
 
@@ -104,13 +108,5 @@ public class PadFragment extends Fragment {
         }
         graph.addSeries(points);
 
-    }
-
-    public LineGraphSeries<DataPoint> getSeries() {
-        return series;
-    }
-
-    public void setSeries(LineGraphSeries<DataPoint> series) {
-        this.series = series;
     }
 }

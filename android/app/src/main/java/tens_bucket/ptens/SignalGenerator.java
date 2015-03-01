@@ -49,41 +49,61 @@ public class SignalGenerator extends FragmentActivity {
 
         pad2 = (PadFragment)(getFragmentManager().findFragmentById(R.id.pad_2));
         pad2.setWaveParameters(parameters.rightWave);
+
+        togglePad(pad1Switch);
+        togglePad(pad2Switch);
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(backgroundTask != null) {
-            backgroundTask.cancel(true);
-        }
+        disableOutput();
     }
 
-    public void toggle(View view) {
+    public void togglePad(View view) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.animator.fade_in, R.animator.fade_out);
         if (view == pad1Switch){
             boolean checked = pad1Switch.isChecked();
             if (checked) {
+                parameters.leftWave.setAmplitude(0);
                 ft.show(pad1);
             }else{
                 ft.hide(pad1);
             }
             parameters.leftWave.setEnabled(checked);
-
+            if(checked) pad1.updateBarsFromParams();
         }
         else if (view == pad2Switch){
             boolean checked = pad2Switch.isChecked();
             if (checked) {
+                parameters.rightWave.setAmplitude(0);
                 ft.show(pad2);
             }else{
                 ft.hide(pad2);
             }
             parameters.rightWave.setEnabled(checked);
+            if(checked) pad2.updateBarsFromParams();
         }
         ft.commit();
+
+        if(parameters.leftWave.isEnabled() || parameters.rightWave.isEnabled()) {
+            enableOutput();
+        } else {
+            disableOutput();
+        }
     }
 
+    private void enableOutput() {
+        backgroundTask = new SignalGeneratorTask();
+        backgroundTask.execute(parameters);
+    }
+
+    private void disableOutput() {
+        if(backgroundTask != null) {
+            backgroundTask.cancel(true);
+        }
+    }
 
 }

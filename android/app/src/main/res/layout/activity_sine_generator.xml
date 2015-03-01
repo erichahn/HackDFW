@@ -1,15 +1,27 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-android:orientation="vertical"
-android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".SineGenerator">
 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context=".SineGenerator"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-            android:orientation="vertical"
             android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".SineGenerator"
             android:layout_height="wrap_content">
 
@@ -17,8 +29,8 @@ android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizon
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pad1_switch"
-                android:checked="true"
-                android:onClick="toggle"
+                android:checked="false"
+                android:onClick="togglePad"
                 android:layout_alignBottom="@+id/pad_one_label"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -36,8 +48,8 @@ android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizon
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/pad2_switch"
-                android:checked="true"
-                android:onClick="toggle"
+                android:checked="false"
+                android:onClick="togglePad"
                 android:layout_below="@+id/pad_1"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -71,4 +83,6 @@ android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizon
 
         </RelativeLayout>
 
-</ScrollView>
+    </ScrollView>
+
+</RelativeLayout>
