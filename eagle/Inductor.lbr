@@ -79,26 +79,18 @@
 </packages>
 <symbols>
 <symbol name="INDUCTOR">
-<circle x="0" y="0" radius="11.359225" width="0.254" layer="94"/>
-<pin name="IN" x="12.7" y="7.62" length="middle" rot="R180"/>
-<pin name="NC" x="12.7" y="-7.62" length="middle" rot="R180"/>
-<pin name="OUT" x="-12.7" y="-7.62" length="middle"/>
-<pin name="NC1" x="-12.7" y="7.62" length="middle"/>
+<pin name="IN" x="-10.16" y="-2.54" length="middle"/>
+<pin name="OUT" x="12.7" y="-2.54" length="middle" rot="R180"/>
+<wire x1="-5.08" y1="-2.54" x2="7.62" y2="-2.54" width="0.254" layer="94"/>
 </symbol>
 </symbols>
 <devicesets>
 <deviceset name="INDUCTOR">
 <gates>
-<gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="2.54"/>
 </gates>
 <devices>
 <device name="" package="INDUCTOR">
-<connects>
-<connect gate="G$1" pin="IN" pad="P$1"/>
-<connect gate="G$1" pin="NC" pad="P$2"/>
-<connect gate="G$1" pin="NC1" pad="P$4"/>
-<connect gate="G$1" pin="OUT" pad="P$3"/>
-</connects>
 <technologies>
 <technology name=""/>
 </technologies>
