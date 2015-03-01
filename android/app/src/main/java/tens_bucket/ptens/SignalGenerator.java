@@ -1,10 +1,9 @@
 package tens_bucket.ptens;
 
-import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -111,18 +110,20 @@ public class SignalGenerator extends ActionBarActivity {
         }
     }
 
-    private void saveCurrentParametersToDisk() {
-
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.save:
-                return true;
+            case R.id.basic:
+                return switchToBasic();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean switchToBasic() {
+        Intent intent = new Intent();
+        startActivity(intent);
+        return true;
     }
 
     @Override
