@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_centerVertical="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="100"
+        >
+
+        <info.hoang8f.widget.FButton
+            fbutton:buttonColor="@color/fbutton_color_clouds"
+            android:layout_width="432dp"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            android:text="Relieve Pain"
+            android:id="@+id/button"
+            android:onClick="clickRelievePain"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/button5"
+            android:layout_alignEnd="@+id/button5"
+            android:textAllCaps="false"
+            android:textSize="30dp" />
+
+        <info.hoang8f.widget.FButton
+            fbutton:buttonColor="@color/fbutton_color_green_sea"
+            android:layout_width="match_parent"
+            android:textAllCaps="false"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            android:text="Relax"
+            android:id="@+id/button2"
+            android:nestedScrollingEnabled="true"
+            android:onClick="clickRelax"
+            android:layout_above="@+id/button3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/button"
+            android:layout_alignEnd="@+id/button"
+            android:layout_gravity="center_vertical"
+            android:textSize="30dp" />
+
+        <info.hoang8f.widget.FButton
+            fbutton:buttonColor="@color/fbutton_color_amethyst"
+            android:layout_width="match_parent"
+            android:text="Pulse"
+            android:textAllCaps="false"
+            android:id="@+id/button3"
+            android:onClick="clickBurst"
+            android:layout_above="@+id/button4"
+            android:layout_alignRight="@+id/button5"
+            android:layout_alignEnd="@+id/button5"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            android:textSize="30dp" />
+
+        <info.hoang8f.widget.FButton
+            fbutton:buttonColor="@color/fbutton_color_sun_flower"
+            android:layout_width="421dp"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            android:text="Feeling Lucky"
+            android:textAllCaps="false"
+            android:id="@+id/button4"
+            android:onClick="clickLucky"
+            android:layout_above="@+id/stop"
+            android:layout_alignRight="@+id/button5"
+            android:layout_alignEnd="@+id/button5"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="bottom"
+            android:textSize="30dp" />
+
+        <info.hoang8f.widget.FButton
+            fbutton:buttonColor="@color/fbutton_color_pomegranate"
+            android:layout_width="420dp"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            android:text="Stop"
+            android:textAllCaps="false"
+            android:id="@+id/stop"
+            android:onClick="clickStop"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="30dp"
+            android:typeface="sans" />
+
+    </LinearLayout>
+</LinearLayout>
