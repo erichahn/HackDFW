@@ -2,7 +2,6 @@ package tens_bucket.ptens.fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,8 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.util.Iterator;
-
 import tens_bucket.ptens.R;
-import tens_bucket.ptens.signal_generator.SignalParameter;
+import tens_bucket.ptens.signal_generator.SignalParameters;
 
 public class PadFragment extends Fragment {
 
@@ -24,7 +21,7 @@ public class PadFragment extends Fragment {
     private SeekBar dutyCycle;
     private GraphView graph;
 
-    private SignalParameter signal;
+    private SignalParameters signal;
     private LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
 
 
@@ -78,7 +75,7 @@ public class PadFragment extends Fragment {
         return r;
     }
 
-    public void setWaveParameters(SignalParameter param){
+    public void setWaveParameters(SignalParameters param){
         this.signal = param;
         setupDefaultWaveParameters();
         setPlotSignal(signal);
@@ -94,7 +91,7 @@ public class PadFragment extends Fragment {
         graph.addSeries(series);
     }
 
-    public void setPlotSignal(SignalParameter signalParameter){
+    public void setPlotSignal(SignalParameters signalParameters){
         graph.removeAllSeries();
         LineGraphSeries<DataPoint> points = new LineGraphSeries<DataPoint>();
 
@@ -102,7 +99,7 @@ public class PadFragment extends Fragment {
         for (int i=0; i < res; i = i +1)
         {
             double x = ((double)i)/(70*res);
-            double tens = signalParameter.getTensValue(x);
+            double tens = signalParameters.getSignalValue(x);
             points.appendData(new DataPoint(x,tens),false, res);
         }
         graph.addSeries(points);

@@ -4,23 +4,16 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.AsyncTask;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 
 import com.google.common.base.Preconditions;
-import com.jjoe64.graphview.series.DataPoint;
 
 import java.nio.ShortBuffer;
 
-import android.os.Handler;
-
-public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParameter, Void, Void> {
+public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParameters, Void, Void> {
 
     private static final String LOG_TAG = SignalGeneratorTask.class.getSimpleName();
     private AudioTrack track;
-    private int minBufferSize;
-    private DataPoint lastDataPoint;
 
     private static final int channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
     private static final int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
@@ -28,13 +21,13 @@ public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParameter, Voi
 
 
     @Override
-    protected Void doInBackground(SignalGeneratorParameter... params) {
+    protected Void doInBackground(SignalGeneratorParameters... params) {
         Preconditions.checkNotNull(params);
         Preconditions.checkArgument(params.length == 1, "AudioGeneratorTask can only handle " +
                 "a single parameter");
-        SignalGeneratorParameter parameters = params[0];
+        SignalGeneratorParameters parameters = params[0];
 
-        minBufferSize = AudioTrack.getMinBufferSize(parameters.getSampleRate(),
+        int minBufferSize = AudioTrack.getMinBufferSize(parameters.getSampleRate(),
                 channelConfig, audioFormat);
         
         Log.d(LOG_TAG, "Min Buffer Size: " + minBufferSize);
@@ -57,7 +50,7 @@ public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParameter, Voi
         return null;
     }
 
-    private short[] generateAudio(SignalGeneratorParameter parameters, int iteration, int bufferSize) {
+    private short[] generateAudio(SignalGeneratorParameters parameters, int iteration, int bufferSize) {
         short[] buffer = new short[bufferSize];
         int startOffset = iteration * bufferSize / 2;
 
@@ -65,13 +58,14 @@ public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParameter, Voi
 
         for(int i = 0; i < buffer.length / 2; i++) {
             double time = (double) ( i + startOffset ) / parameters.getSampleRate();
-            double rightValue = parameters.rightWave.getTensValue(time);
-            double leftValue = parameters.leftWave.getTensValue(time);
+            double rightValue = parameters.rightWave.isEnabled() ?
+                    parameters.rightWave.getSignalValue(time) : 0;
+            double leftValue = parameters.leftWave.isEnabled() ?
+                    parameters.leftWave.getSignalValue(time) : 0;
             buf.put((short) (rightValue * MAX_SIGNAL_VALUE));
             buf.put((short) (leftValue * MAX_SIGNAL_VALUE));
         }
         return buffer;
     }
-    private boolean sent  = false;
 
 }

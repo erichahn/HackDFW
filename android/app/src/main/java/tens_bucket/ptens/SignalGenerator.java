@@ -7,11 +7,10 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Switch;
 
 import tens_bucket.ptens.fragments.PadFragment;
-import tens_bucket.ptens.signal_generator.SignalGeneratorParameter;
+import tens_bucket.ptens.signal_generator.SignalGeneratorParameters;
 import tens_bucket.ptens.signal_generator.SignalGeneratorTask;
 
 
@@ -23,7 +22,7 @@ public class SignalGenerator extends FragmentActivity {
     private Switch pad2Switch;
 
     private SignalGeneratorTask backgroundTask;
-    private SignalGeneratorParameter parameters;
+    private SignalGeneratorParameters parameters;
     private PadFragment pad2;
     private PadFragment pad1;
 
@@ -34,25 +33,22 @@ public class SignalGenerator extends FragmentActivity {
         setContentView(R.layout.activity_sine_generator);
 
 
-        pad1Switch = (Switch) findViewById(R.id.switch1);
-        pad2Switch = (Switch) findViewById(R.id.switch2);
+        pad1Switch = (Switch) findViewById(R.id.pad1_switch);
+        pad2Switch = (Switch) findViewById(R.id.pad2_switch);
 
 
-        parameters = new SignalGeneratorParameter();
-        pad1 = (PadFragment)(getFragmentManager().findFragmentById(R.id.pad_1));
-        pad1.setWaveParameters(parameters.leftWave);
-        parameters.leftWave.setFragment(pad1);
-
-        pad2 = (PadFragment)(getFragmentManager().findFragmentById(R.id.pad_2));
-        pad2.setWaveParameters(parameters.rightWave);
-        parameters.rightWave.setFragment(pad2);
-
-
+        parameters = new SignalGeneratorParameters();
         int sampleRate = AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC);
-        
+
         Log.d(LOG_TAG, "Sample Rate: " + sampleRate);
 
         parameters.setSampleRate(sampleRate);
+
+        pad1 = (PadFragment)(getFragmentManager().findFragmentById(R.id.pad_1));
+        pad1.setWaveParameters(parameters.leftWave);
+
+        pad2 = (PadFragment)(getFragmentManager().findFragmentById(R.id.pad_2));
+        pad2.setWaveParameters(parameters.rightWave);
     }
 
 
@@ -66,28 +62,25 @@ public class SignalGenerator extends FragmentActivity {
 
     public void toggle(View view) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.setCustomAnimations(android.R.animator.fade_in,
-                android.R.animator.fade_out);
+        ft.setCustomAnimations(R.animator.fade_in, R.animator.fade_out);
         if (view == pad1Switch){
-            if (pad1Switch.isChecked()) {
+            boolean checked = pad1Switch.isChecked();
+            if (checked) {
                 ft.show(pad1);
-                parameters.leftWave.setEnabled(true);
             }else{
                 ft.hide(pad1);
-                parameters.leftWave.setEnabled(false);
             }
+            parameters.leftWave.setEnabled(checked);
 
         }
         else if (view == pad2Switch){
-            if (pad2Switch.isChecked()) {
+            boolean checked = pad2Switch.isChecked();
+            if (checked) {
                 ft.show(pad2);
-                parameters.rightWave.setEnabled(true);
             }else{
                 ft.hide(pad2);
-                parameters.rightWave.setEnabled(false);
-
             }
-
+            parameters.rightWave.setEnabled(checked);
         }
         ft.commit();
     }
