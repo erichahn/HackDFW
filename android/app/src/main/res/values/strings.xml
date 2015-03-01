@@ -1,12 +1,9 @@
 <resources>
     <string name="app_name">pTENS</string>
 
-    <string name="right_freq_str">Right Frequency (0 - 150Hz)</string>
-    <string name="right_amp_str">Right Amplitude (0-100%)</string>
-    <string name="left_freq_str">Left Frequency (0 - 150Hz)</string>
-    <string name="left_amp_str">Left Amplitude (0-100%)</string>
     <string name="stop_str">Stop</string>
     <string name="start_str">Start</string>
-    <string name="right_duty_str">Right Duty Cycle (3.5 - 20.0%)</string>
-    <string name="left_duty_str">Left Duty Cycle (3.5 - 20.0%)</string>
+    <string name="frequency_str">Frequency</string>
+    <string name="amplitude_str">Amplitude</string>
+    <string name="duty_cycle_str">Duty Cycle</string>
 </resources>

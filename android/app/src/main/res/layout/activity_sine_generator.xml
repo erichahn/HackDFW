@@ -6,89 +6,36 @@ android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizon
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".SineGenerator">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/right_freq_str"
-        android:id="@+id/textView" />
-
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/right_freq_bar"
-        android:max="149"
-        android:progress="74" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/right_amp_str"
-        android:id="@+id/amp_label" />
+        android:text="Pad 1"
+        android:id="@+id/textView2"
+        android:layout_gravity="right"
+        android:gravity="center" />
 
-    <SeekBar
-        android:layout_width="match_parent"
+    <fragment android:name="tens_bucket.ptens.fragments.PadFragment"
+        android:id="@+id/pad_1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/right_amp_bar"
-        android:progress="50" />
+        tools:layout="@layout/pad_fragment" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/right_duty_str"
-        android:id="@+id/right_duty_label" />
+        android:text="Pad 2"
+        android:id="@+id/textView"
+        android:layout_gravity="right"
+        android:gravity="center" />
 
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/right_duty_bar"
-        android:max="165"
-        android:progress="10"
-        android:longClickable="false" />
-
-    <TextView
+    <fragment android:name="tens_bucket.ptens.fragments.PadFragment"
+        android:id="@+id/pad_2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/left_freq_str"
-        android:id="@+id/left_freq_label" />
-
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/left_freq_bar"
-        android:progress="74"
-        android:max="149" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/left_amp_str"
-        android:id="@+id/left_amp_label" />
-
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/left_amp_bar"
-        android:max="100"
-        android:progress="50" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/left_duty_str"
-        android:id="@+id/left_duty_label" />
-
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/left_duty_bar"
-        android:max="165"
-        android:progress="10" />
+        tools:layout="@layout/pad_fragment" />
 
     <Button
         android:layout_width="fill_parent"
@@ -104,4 +51,5 @@ android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizon
         android:id="@+id/stop_button"
         android:enabled="false"
         android:onClick="stop" />
+
 </LinearLayout>
