@@ -38,7 +38,7 @@ public class SignalGeneratorTask extends AsyncTask<SignalGeneratorParameters, Vo
         track.play();
 
         for(int i = 0; !isCancelled(); i++) {
-            short[] buffer = generateAudio(parameters, i, minBufferSize);
+            short[] buffer = generateAudio(parameters, i, minBufferSize / 4);
             int ret = track.write(buffer, 0, buffer.length);
             if(ret < 0) {
                 Log.e(LOG_TAG, "ERROR CODE: " + ret);
