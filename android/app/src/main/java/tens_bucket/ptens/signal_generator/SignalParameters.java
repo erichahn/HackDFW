@@ -1,33 +1,20 @@
 package tens_bucket.ptens.signal_generator;
 
-import android.provider.ContactsContract;
-
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
-import java.util.concurrent.Semaphore;
-
-import tens_bucket.ptens.fragments.PadFragment;
-
-public class SignalParameter {
+public class SignalParameters {
     private volatile int frequency;
     private volatile double dutyCycle;
     private volatile double amplitude;
+    private volatile boolean enabled;
 
-    private PadFragment fragment;
-    private volatile boolean enabled = true;
-
-    private LineGraphSeries<DataPoint> dataPlot = new LineGraphSeries<DataPoint>();
-
-
-    public SignalParameter() {
-        this(1, 4.5, 1.0);
+    public SignalParameters() {
+        this(1, 4.5, 1.0, true);
     }
 
-    public SignalParameter(int frequency, double dutyCycle, double amplitude) {
+    public SignalParameters(int frequency, double dutyCycle, double amplitude, boolean enabled) {
         this.frequency = frequency;
         this.dutyCycle = dutyCycle;
         this.amplitude = amplitude;
+        this.enabled = enabled;
     }
 
     public int getFrequency() {
@@ -54,26 +41,15 @@ public class SignalParameter {
         this.amplitude = amplitude;
     }
 
-    public PadFragment getFragment() {
-        return fragment;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setFragment(PadFragment fragment) {
-        this.fragment = fragment;
-    }
-
-    public LineGraphSeries<DataPoint> getDataPlot() {
-        return dataPlot;
-    }
-
-    public void setDataPlot(LineGraphSeries<DataPoint> dataPlot) {
-        this.dataPlot = dataPlot;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public double tens(double percentOfPeriodComplete) {
-        if (!enabled){
-            return 0;
-        }
         double Vh = getAmplitude();
         double Vl = -Vh/3;
 
@@ -89,7 +65,7 @@ public class SignalParameter {
 
     }
 
-    public double getTensValue(double time) {
+    public double getSignalValue(double time) {
         double period = 1.0/((double) getFrequency());
         double step = (time) % period;
 
@@ -97,14 +73,6 @@ public class SignalParameter {
 
         return val;
 
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 }
 

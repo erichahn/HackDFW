@@ -24,4 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.google.guava:guava:18.0'
     compile 'com.jjoe64:graphview:4.0.0'
+    compile 'info.hoang8f:fbutton:1.0.5'
 }

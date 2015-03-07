@@ -1,8 +1,8 @@
 package tens_bucket.ptens.signal_generator;
 
-public class SignalGeneratorParameter {
-    public final SignalParameter rightWave = new SignalParameter();
-    public final SignalParameter leftWave = new SignalParameter();
+public class SignalGeneratorParameters {
+    public final SignalParameters rightWave = new SignalParameters();
+    public final SignalParameters leftWave = new SignalParameters();
 
     private int sampleRate;
 

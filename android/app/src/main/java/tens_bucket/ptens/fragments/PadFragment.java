@@ -2,7 +2,6 @@ package tens_bucket.ptens.fragments;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,8 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.util.Iterator;
-
 import tens_bucket.ptens.R;
-import tens_bucket.ptens.signal_generator.SignalParameter;
+import tens_bucket.ptens.signal_generator.SignalParameters;
 
 public class PadFragment extends Fragment {
 
@@ -24,14 +21,13 @@ public class PadFragment extends Fragment {
     private SeekBar dutyCycle;
     private GraphView graph;
 
-    private SignalParameter signal;
-    private LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
+    private SignalParameters signal;
 
 
     private SeekBar.OnSeekBarChangeListener changeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (signal != null) {
+            if (signal != null && fromUser) {
                 if (seekBar == frequency) {
                     signal.setFrequency(progress + 1);
                 } else if (seekBar == amplitude) {
@@ -73,28 +69,33 @@ public class PadFragment extends Fragment {
 
         setupGraph();
 
-
-
         return r;
     }
 
-    public void setWaveParameters(SignalParameter param){
+    public void setWaveParameters(SignalParameters param){
         this.signal = param;
-        setupDefaultWaveParameters();
+        updateParamsFromBars();
         setPlotSignal(signal);
     }
-    private void setupDefaultWaveParameters() {
+
+    public void updateParamsFromBars() {
         signal.setAmplitude(amplitude.getProgress() / 100.0);
         signal.setFrequency(frequency.getProgress() + 1);
         signal.setDutyCycle(dutyCycle.getProgress() / 10.0 + 3.5);
     }
 
-    private void setupGraph(){
-        graph.removeAllSeries();
-        graph.addSeries(series);
+    public void updateBarsFromParams() {
+        amplitude.setProgress((int) (signal.getAmplitude() * 100));
+        frequency.setProgress(signal.getFrequency() - 1);
+        dutyCycle.setProgress((int)((signal.getDutyCycle() - 3.5) * 10));
     }
 
-    public void setPlotSignal(SignalParameter signalParameter){
+    private void setupGraph(){
+        graph.removeAllSeries();
+        graph.addSeries(new LineGraphSeries<DataPoint>());
+    }
+
+    private void setPlotSignal(SignalParameters signalParameters){
         graph.removeAllSeries();
         LineGraphSeries<DataPoint> points = new LineGraphSeries<DataPoint>();
 
@@ -102,18 +103,10 @@ public class PadFragment extends Fragment {
         for (int i=0; i < res; i = i +1)
         {
             double x = ((double)i)/(70*res);
-            double tens = signalParameter.getTensValue(x);
+            double tens = signalParameters.getSignalValue(x);
             points.appendData(new DataPoint(x,tens),false, res);
         }
         graph.addSeries(points);
 
-    }
-
-    public LineGraphSeries<DataPoint> getSeries() {
-        return series;
-    }
-
-    public void setSeries(LineGraphSeries<DataPoint> series) {
-        this.series = series;
     }
 }
